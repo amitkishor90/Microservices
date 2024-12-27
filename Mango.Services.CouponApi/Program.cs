@@ -1,3 +1,5 @@
+using AutoMapper;
+using Mango.Services.CouponApi;
 using Mango.Services.CouponApi.Data;
 using Mango.Services.CouponApi.Dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,10 +21,15 @@ internal class Program
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         });
        // builder.Services.AddSingleton<ResponseDto>();
-        // Add services to the container
+       
+        IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+        builder.Services.AddSingleton(mapper);
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddEndpointsApiExplorer();
+        
         builder.Services.AddSwaggerGen(option =>
         {
             option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
