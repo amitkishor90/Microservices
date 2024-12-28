@@ -49,7 +49,7 @@ namespace Mango.web.Services.IServices
             return await _baseService.sendAsync(new RequestDto
             {
                 ApiType = ApiType.DELETE,
-                url = SD.CouponAPIBase + "/api/coupon/Delete/" + id,
+                url = SD.CouponAPIBase + "/api/coupon/" + id,
                 AccessToken = ""
             });
         }
