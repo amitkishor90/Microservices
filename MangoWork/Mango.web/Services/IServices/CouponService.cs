@@ -16,12 +16,12 @@ namespace Mango.web.Services.IServices
 
         public async Task<ResponseDto?> GetAllCouponAsync()
         {
-          return  await _baseService.sendAsync(new RequestDto
+          return  await _baseService.sendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 url = SD.CouponAPIBase + "/api/coupon/GetAllCoupons",
                 AccessToken = ""
-            });
+            },true);
         }
 
         public async Task<ResponseDto?> GetByCouponCodeAsync(string couponCode)
@@ -31,7 +31,7 @@ namespace Mango.web.Services.IServices
                 ApiType = ApiType.GET,
                 url = SD.CouponAPIBase + "/api/coupon/GetByCouponCode/" + couponCode,
                 AccessToken = ""
-            });
+            },true);
         }
 
         public async Task<ResponseDto?> GetByIdCouponAsync(int id)
@@ -41,7 +41,7 @@ namespace Mango.web.Services.IServices
                ApiType = ApiType.GET,
                url = SD.CouponAPIBase + "/api/coupon/GetByIdCoupon/" + id,
                AccessToken = ""
-           });
+           }, true);
         }
 
         public async Task<ResponseDto?> DeleteCouponsAsync(int id)
@@ -51,7 +51,7 @@ namespace Mango.web.Services.IServices
                 ApiType = ApiType.DELETE,
                 url = SD.CouponAPIBase + "/api/coupon/" + id,
                 AccessToken = ""
-            });
+            }, true);
         }
 
         public Task<ResponseDto?> CreateCouponAsync(CouponDto couponDto)
@@ -62,7 +62,7 @@ namespace Mango.web.Services.IServices
                 url = SD.CouponAPIBase + "/api/coupon",
                 AccessToken = "",
                 Data = couponDto
-            });
+            }, true);
         }
 
         public async Task<ResponseDto?> UpdateCouponAsync(CouponDto couponDto)
@@ -73,7 +73,7 @@ namespace Mango.web.Services.IServices
                url = SD.CouponAPIBase + "/api/coupon/Put/" ,
                AccessToken = "",
                Data = couponDto
-           });
+           }, true);
         }
     }
 }
