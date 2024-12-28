@@ -6,5 +6,6 @@ namespace Mango.services.AuthApi.IService
     {
         Task<string> Register(RegisterationRequestDto request);
         Task<LoginResponseDto> Login(LoginRequestDto request);
+        Task<bool> AssignRole(string email,string roleName);
     }
 }
