@@ -33,7 +33,7 @@ internal class Program
         app.UseAuthorization();
 
         app.MapStaticAssets();
-
+        app.UseStaticFiles(); // Static files middleware
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}")
