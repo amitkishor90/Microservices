@@ -53,6 +53,11 @@
             </p>
         </div>
     </footer>
+    @RenderSection("scripts", required: false)
+    @section scripts {
+        <script src="~/js/custom-scripts.js"></script>
+    }
+
 
 </body>
 </html>

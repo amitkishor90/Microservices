@@ -59,7 +59,7 @@ namespace Mango.web.Services.IServices
             return _baseService.sendAsync(new RequestDto
             {
                 ApiType = ApiType.POST,
-                url = SD.CouponAPIBase + "/api/coupon/Post",
+                url = SD.CouponAPIBase + "/api/coupon",
                 AccessToken = "",
                 Data = couponDto
             });
