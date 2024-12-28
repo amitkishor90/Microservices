@@ -7,6 +7,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/site.css"> <!-- Ensure this is the correct path -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
 
 </head>
 <body>
@@ -39,6 +40,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <partial name="_Notifications" />
         </main>
     </div>
 
@@ -53,10 +55,11 @@
             </p>
         </div>
     </footer>
-    @RenderSection("scripts", required: false)
-    @section scripts {
-        <script src="~/js/custom-scripts.js"></script>
-    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
 
 </body>
