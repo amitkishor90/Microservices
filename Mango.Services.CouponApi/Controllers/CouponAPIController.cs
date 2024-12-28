@@ -27,6 +27,7 @@ namespace Mango.Services.CouponApi.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllCoupons")]
         public object Get()
         {
             try
@@ -45,8 +46,8 @@ namespace Mango.Services.CouponApi.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public object Get(int id)
+        [Route("GetByIdCoupon/{id:int}")]
+        public object GetByIdCoupon(int id)
         {
             try
             {
@@ -64,8 +65,8 @@ namespace Mango.Services.CouponApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetByCode/{code}")]
-        public object GetByCode(string code)
+        [Route("GetByCouponCode/{code}")]
+        public object GetByCouponCode(string code)
         {
             try
             {
