@@ -1,8 +1,67 @@
 ﻿@model LoginRequestDto
 
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background: #fff;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+    .btn-success {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+        color: #dc3545;
+    }
+</style>
+
 <form method="post">
     <div class="container border p-4">
-        <div class="row text-center">
+        <div class="row text-center mb-4">
             <h1>Login</h1>
         </div>
         <div class="row">

@@ -1,5 +1,67 @@
 ﻿@model RegisterationRequestDto
 
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background: #fff;
+        border-radius: 8px;
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control, .form-select {
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        margin-bottom: 1rem;
+    }
+
+        .form-control:focus, .form-select:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+    .btn-success {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+        color: #dc3545;
+    }
+</style>
+
 <form method="post">
     <div class="container border p-4">
         <div class="row text-center p-3">
@@ -26,8 +88,8 @@
                 <select asp-for="Role" class="form-select" asp-items="@ViewBag.RoleList">
                     <option disabled selected>--Select Role--</option>
                 </select>
+                <span asp-validation-for="Role" class="text-danger" />
             </div>
-
             <div class="col-12 col-md-6 offset-md-3 pb-2">
                 <button type="submit" class="form-control btn btn-success" value="Submit">Register</button>
             </div>

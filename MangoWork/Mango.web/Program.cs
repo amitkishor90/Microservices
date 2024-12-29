@@ -12,10 +12,11 @@ internal class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddHttpClient();
-        builder.Services.AddHttpClient<ICouponService, CouponService>();
+      
         SD.CouponAPIBase = builder.Configuration["ServiceUrls:CouponAPI"];
         SD.AuthAPIBase = builder.Configuration["ServiceUrls:AuthAPI"];
 
+        builder.Services.AddHttpClient<ICouponService, CouponService>();
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<ICouponService, CouponService>();    
         builder.Services.AddScoped<IBaseService, BaseService>();
@@ -23,7 +24,7 @@ internal class Program
         
 
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+          .AddCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromHours(10);
         options.LoginPath = "/Auth/Login";
