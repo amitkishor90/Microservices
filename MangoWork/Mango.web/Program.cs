@@ -26,7 +26,7 @@ internal class Program
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
           .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromHours(10);
+        options.ExpireTimeSpan = TimeSpan.FromHours(9);
         options.LoginPath = "/Auth/Login";
         options.AccessDeniedPath = "/Auth/AccessDenied";
     });
@@ -43,7 +43,7 @@ internal class Program
 
         app.UseHttpsRedirection();
         app.UseRouting();
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapStaticAssets();
