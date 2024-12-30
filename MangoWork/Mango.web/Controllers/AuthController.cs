@@ -78,6 +78,11 @@ namespace Mango.web.Controllers
                 assingRole = await _authService.AssignRole(obj);
                 if (assingRole != null && assingRole.IsSuccess)
                 {
+                   // TempData["success"] = "Registration Successful";
+                   // return RedirectToAction(nameof(Login));
+                }
+                else
+                {
                     TempData["success"] = "Registration Successful";
                     return RedirectToAction(nameof(Login));
                 }
@@ -108,26 +113,42 @@ namespace Mango.web.Controllers
         {
             var handler = new JwtSecurityTokenHandler();
 
+            if (string.IsNullOrEmpty(model.Token))
+                throw new ArgumentException("Token is null or empty", nameof(model.Token));
+
             var jwt = handler.ReadJwtToken(model.Token);
 
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email,
-                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub,
-                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Sub).Value));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name,
-                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Name).Value));
 
+            var emailClaim = jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email)?.Value;
+            var subClaim = jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            var nameClaim = jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Name)?.Value;
+            var roleClaim = jwt.Claims.FirstOrDefault(u => u.Type == "role")?.Value;
 
-            identity.AddClaim(new Claim(ClaimTypes.Name,
-                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
-            identity.AddClaim(new Claim(ClaimTypes.Role,
-                jwt.Claims.FirstOrDefault(u => u.Type == "role").Value));
+            if (!string.IsNullOrEmpty(emailClaim))
+            {
+                identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, emailClaim));
+                identity.AddClaim(new Claim(ClaimTypes.Name, emailClaim));
+            }
 
+            if (!string.IsNullOrEmpty(subClaim))
+            {
+                identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, subClaim));
+            }
 
+            if (!string.IsNullOrEmpty(nameClaim))
+            {
+                identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name, nameClaim));
+            }
+
+            if (!string.IsNullOrEmpty(roleClaim))
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, roleClaim));
+            }
 
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
+
     }
 }

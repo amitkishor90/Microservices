@@ -18,7 +18,7 @@ namespace Mango.web.Services.IServices
            return await _baseService.sendAsync(new RequestDto
            {
                ApiType = ApiType.POST,
-               url = AuthAPIBase + "/api/auth/AssignRole",
+               url = AuthAPIBase + "/api/AuthAPI/AssignRole",
                AccessToken = "",
                Data = registerationRequestDto
            }, true);
@@ -40,7 +40,7 @@ namespace Mango.web.Services.IServices
             {
                 ApiType = SD.ApiType.POST,
                 Data = registerationRequestDto,
-                url = SD.AuthAPIBase + "/api/auth/register"
+                url = SD.AuthAPIBase + "/api/AuthAPI/register"
             }, false);
         }
     }
