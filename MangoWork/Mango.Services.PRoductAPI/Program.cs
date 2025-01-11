@@ -1,39 +1,40 @@
 using AutoMapper;
+
+using Mango.Services.PRoductAPI;
 using Mango.Services.PRoductAPI.Data;
+using Mango.Services.PRoductAPI.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
-internal class Program
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    private static void Main(string[] args)
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(option =>
+{
+    option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-
-        builder.Services.AddDbContext<AppDbContext>(option =>
-        {
-            option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-        });
-      //  IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-       // builder.Services.AddSingleton(mapper);
-        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(option =>
-        {
-            option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
-            });
-            option.AddSecurityRequirement(new OpenApiSecurityRequirement
+        Name = "Authorization",
+        Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
@@ -46,44 +47,42 @@ internal class Program
             }, new string[]{}
         }
     });
-        });
-       // builder.AddAppAuthetication();
+});
+builder.AddAppAuthetication();
 
-        builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();
 
-        var app = builder.Build();
+var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
+// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    if (!app.Environment.IsDevelopment())
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cart API");
+        c.RoutePrefix = string.Empty;
+    }
+});
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseStaticFiles();
+app.MapControllers();
+ApplyMigration();
+app.Run();
+
+
+void ApplyMigration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        if (_db.Database.GetPendingMigrations().Count() > 0)
         {
-            if (!app.Environment.IsDevelopment())
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cart API");
-                c.RoutePrefix = string.Empty;
-            }
-        });
-
-        app.UseHttpsRedirection();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseStaticFiles();
-        app.MapControllers();
-        ApplyMigration();
-        app.Run();
-
-
-        void ApplyMigration()
-        {
-            using (var scope = app.Services.CreateScope())
-            {
-                var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-                if (_db.Database.GetPendingMigrations().Count() > 0)
-                {
-                    _db.Database.Migrate();
-                }
-            }
+            _db.Database.Migrate();
         }
     }
 }

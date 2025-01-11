@@ -19,7 +19,7 @@ namespace Mango.web.Services.IServices
           return  await _baseService.sendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                url = SD.CouponAPIBase + "/api/coupon/GetAllCoupons",
+                Url = SD.CouponAPIBase + "/api/coupon/GetAllCoupons",
                 AccessToken = ""
             },true);
         }
@@ -29,7 +29,7 @@ namespace Mango.web.Services.IServices
            return await _baseService.sendAsync(new RequestDto
             {
                 ApiType = ApiType.GET,
-                url = SD.CouponAPIBase + "/api/coupon/GetByCouponCode/" + couponCode,
+                Url = SD.CouponAPIBase + "/api/coupon/GetByCouponCode/" + couponCode,
                 AccessToken = ""
             },true);
         }
@@ -39,7 +39,7 @@ namespace Mango.web.Services.IServices
           return await _baseService.sendAsync(new RequestDto
            {
                ApiType = ApiType.GET,
-               url = SD.CouponAPIBase + "/api/coupon/GetByIdCoupon/" + id,
+               Url = SD.CouponAPIBase + "/api/coupon/GetByIdCoupon/" + id,
                AccessToken = ""
            }, true);
         }
@@ -49,7 +49,7 @@ namespace Mango.web.Services.IServices
             return await _baseService.sendAsync(new RequestDto
             {
                 ApiType = ApiType.DELETE,
-                url = SD.CouponAPIBase + "/api/coupon/" + id,
+                Url = SD.CouponAPIBase + "/api/coupon/" + id,
                 AccessToken = ""
             }, true);
         }
@@ -59,7 +59,7 @@ namespace Mango.web.Services.IServices
             return _baseService.sendAsync(new RequestDto
             {
                 ApiType = ApiType.POST,
-                url = SD.CouponAPIBase + "/api/coupon",
+                Url = SD.CouponAPIBase + "/api/coupon",
                 AccessToken = "",
                 Data = couponDto
             }, true);
@@ -70,7 +70,7 @@ namespace Mango.web.Services.IServices
            return await _baseService.sendAsync(new RequestDto
            {
                ApiType = ApiType.PUT,
-               url = SD.CouponAPIBase + "/api/coupon/Put/" ,
+               Url = SD.CouponAPIBase + "/api/coupon/Put/" ,
                AccessToken = "",
                Data = couponDto
            }, true);

@@ -15,12 +15,14 @@ internal class Program
       
         SD.CouponAPIBase = builder.Configuration["ServiceUrls:CouponAPI"];
         SD.AuthAPIBase = builder.Configuration["ServiceUrls:AuthAPI"];
+        SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductApi"];
 
         builder.Services.AddHttpClient<ICouponService, CouponService>();
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<ICouponService, CouponService>();    
         builder.Services.AddScoped<IBaseService, BaseService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<IProductService, ProductService>();
         
 
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

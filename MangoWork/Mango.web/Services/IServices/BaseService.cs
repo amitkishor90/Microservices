@@ -31,7 +31,7 @@ namespace Mango.web.Services.IServices
                     message.Headers.Add("Authorization",$"Bearer {token}");
                 }
 
-                message.RequestUri = new Uri(requestDto.url);
+                message.RequestUri = new Uri(requestDto.Url);
                 if (requestDto.Data != null)
                 {
                     message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data),
